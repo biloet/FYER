@@ -3,8 +3,8 @@
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => document.querySelectorAll(s);
 
-  const state = { account: null, chainId: null, tab: "shield", net: cfg.defaultNetwork };
-  const target = () => cfg.networks[state.net];
+  const state = { account: null, chainId: null, tab: "shield" };
+  const target = () => cfg.network;
   const toHex = (n) => "0x" + n.toString(16);
   const short = (a) => a.slice(0, 6) + "…" + a.slice(-4);
 
@@ -38,7 +38,7 @@
 
   // ---------- Network details ----------
   function renderNet() {
-    const n = cfg.networks[state.net];
+    const n = cfg.network;
     $("#netDetails").innerHTML = `
       <dt>Network name</dt><dd>${n.chainName}</dd>
       <dt>Chain ID</dt><dd>${n.chainId}</dd>
@@ -46,14 +46,6 @@
       <dt>RPC URL</dt><dd>${n.rpcUrls[0]}</dd>
       <dt>Explorer</dt><dd><a href="${n.blockExplorerUrls[0]}" target="_blank" rel="noopener">${n.blockExplorerUrls[0]}</a></dd>`;
   }
-  $$("[data-net]").forEach((b) =>
-    b.addEventListener("click", () => {
-      $$("[data-net]").forEach((x) => x.classList.toggle("active", x === b));
-      state.net = b.dataset.net;
-      renderNet();
-      updateStatus();
-    })
-  );
   renderNet();
 
   // ---------- Wallet ----------

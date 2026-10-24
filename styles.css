@@ -142,7 +142,7 @@ h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.1; letter-spacing: -.
 
 /* app */
 .app { max-width: 480px; margin: 0 auto; background: var(--panel); border: 1px solid var(--border-hi); border-radius: 24px; padding: 20px; box-shadow: 0 30px 80px -40px rgba(0,200,5,.5); }
-.app-tabs, .net-tabs { display: flex; gap: 6px; padding: 4px; background: rgba(0,0,0,.3); border-radius: 12px; margin-bottom: 16px; }
+.app-tabs { display: flex; gap: 6px; padding: 4px; background: rgba(0,0,0,.3); border-radius: 12px; margin-bottom: 16px; }
 .tab { flex: 1; background: none; border: 0; color: var(--muted); padding: 9px; border-radius: 9px; font-weight: 600; transition: background .2s, color .2s; }
 .tab.active { background: rgba(124,255,107,.14); color: var(--lime); }
 .app-status { display: grid; gap: 6px; margin-bottom: 16px; }
