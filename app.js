@@ -20,7 +20,7 @@
 
   $("#navToggle").addEventListener("click", () => $("#navLinks").classList.toggle("open"));
   $$("#navLinks a").forEach((a) => a.addEventListener("click", () => $("#navLinks").classList.remove("open")));
-  $("#xLink").href = cfg.links.x;
+  $$("[data-x]").forEach((a) => (a.href = cfg.links.x));
 
   const io = new IntersectionObserver(
     (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))),

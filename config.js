@@ -11,5 +11,5 @@ window.FYER_CONFIG = {
   // Set once the FYER shielded pool contract is deployed.
   poolAddress: null,
   fees: { shield: 0.3, transfer: 0, withdraw: 0.3 },
-  links: { x: "https://x.com/", docs: "#docs", app: "#app" },
+  links: { x: "https://x.com/fyerdotsite", docs: "#docs", app: "#app" },
 };
