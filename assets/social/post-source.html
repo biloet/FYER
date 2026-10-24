@@ -1,0 +1,53 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+#post{position:relative;width:1600px;height:900px;overflow:hidden;background:#020604;font-family:Inter,sans-serif;color:#ecfdec;display:grid;place-items:center;text-align:center}
+canvas{position:absolute;inset:0}
+.glow{position:absolute;width:1100px;height:900px;left:250px;top:120px;border-radius:50%;filter:blur(80px);background:radial-gradient(circle,rgba(0,200,5,.42),transparent 62%)}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(2,6,4,.92) 100%)}
+.brand{position:absolute;left:64px;top:56px;display:flex;align-items:center;gap:14px;font-weight:800;letter-spacing:.16em;font-size:26px}
+.brand svg{width:44px;height:44px}
+.content{position:relative}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:20px;letter-spacing:.3em;color:#7cff6b;display:inline-flex;align-items:center;gap:16px}
+.kicker b{width:40px;height:2px;background:#7cff6b;box-shadow:0 0 10px #7cff6b}
+h1{font-weight:900;font-size:128px;line-height:.98;letter-spacing:-.05em;margin:30px 0 48px}
+.grad{background:linear-gradient(90deg,#d4ff6a,#7cff6b 45%,#00c805);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 40px rgba(124,255,107,.35))}
+.tx{display:inline-flex;align-items:center;gap:18px;font-family:"JetBrains Mono",monospace;font-size:24px;padding:18px 28px;border-radius:18px;background:rgba(10,28,16,.75);border:1px solid rgba(124,255,107,.35);box-shadow:0 30px 80px -30px rgba(0,200,5,.6)}
+.tx .k{color:#87ad92}
+.r{display:inline-block;height:22px;border-radius:5px;background:linear-gradient(90deg,#0f3a1b,#2a7a3c,#0f3a1b);vertical-align:middle}
+.ok{color:#7cff6b;display:inline-flex;align-items:center;gap:8px}
+.ok i{width:9px;height:9px;border-radius:50%;background:#7cff6b;box-shadow:0 0 10px #7cff6b}
+.foot{position:absolute;right:64px;top:62px;font-family:"JetBrains Mono",monospace;font-size:18px;color:#87ad92;letter-spacing:.12em}
+</style></head><body>
+<div id="post">
+  <div class="glow"></div>
+  <canvas id="cv" width="1600" height="900"></canvas>
+  <div class="vig"></div>
+  <div class="brand">
+    <svg viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4ff6a"/><stop offset="1" stop-color="#00c805"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="#06120A" stroke="rgba(124,255,107,.35)"/><path d="M20 46V18h26v7H28v6h15v7H28v8z" fill="url(#g)"/></svg>
+    FYER
+  </div>
+  <div class="foot">ROBINHOOD CHAIN</div>
+  <div class="content">
+    <div class="kicker"><b></b>ZERO-KNOWLEDGE PRIVACY<b></b></div>
+    <h1>Private money.<br><span class="grad">Same Robinhood Chain.</span></h1>
+    <div class="tx">
+      <span class="k">from</span><span class="r" style="width:150px"></span>
+      <span class="k">to</span><span class="r" style="width:150px"></span>
+      <span class="k">amount</span><span class="r" style="width:96px"></span>
+      <span class="ok"><i></i>verified</span>
+    </div>
+  </div>
+</div>
+<script>
+let seed=9;const r=()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296);
+const c=document.getElementById('cv').getContext('2d');
+for(let i=0;i<260;i++){const s=r()*1.8+.4;c.fillStyle=`rgba(150,255,140,${.28*s})`;c.fillRect(r()*1600,r()*900,s,s);}
+const N=1800,g=Math.PI*(3-Math.sqrt(5)),R=520,cx=800,cy=470,ry=.5,rx=-.4;
+const cY=Math.cos(ry),sY=Math.sin(ry),cX=Math.cos(rx),sX=Math.sin(rx);
+for(let i=0;i<N;i++){const y=1-(i/(N-1))*2,rr=Math.sqrt(1-y*y),x=Math.cos(g*i)*rr,z=Math.sin(g*i)*rr;
+ const x1=x*cY-z*sY,z1=x*sY+z*cY,y1=y*cX-z1*sX,z2=y*sX+z1*cX,d=(z2+1)/2,p=1+z2*.25,s=1+d*2;
+ c.fillStyle=`rgba(${90+d*60|0},255,${100+d*30|0},${.05+d*.35})`;c.fillRect(cx+x1*R*p,cy+y1*R*p,s,s);}
+c.strokeStyle='rgba(124,255,107,.16)';c.lineWidth=1.5;c.beginPath();c.ellipse(cx,cy,R*1.45,R*.3,-.18,0,7);c.stroke();
+</script></body></html>
