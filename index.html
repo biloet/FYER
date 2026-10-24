@@ -1,266 +1,284 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FYER — Privasi Tanpa Batas</title>
-  <meta name="description" content="FYER: lapisan privasi generasi baru untuk transaksi dan komunikasi on-chain." />
+  <title>FYER · Private money. Same Robinhood Chain.</title>
+  <meta name="description" content="FYER brings zero-knowledge privacy to Robinhood Chain. Shield once, then send, trade and withdraw without the chain linking it back to you." />
+  <meta name="theme-color" content="#030805" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300120a'/><path d='M9 8h14v4H13v3h8v4h-8v5H9z' fill='%2339ff88'/></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <canvas id="bg"></canvas>
-  <div class="glows"><div class="glow glow-1"></div><div class="glow glow-2"></div></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
 
-  <!-- NAV -->
-  <header class="nav" id="nav">
+  <header class="nav">
     <div class="container nav-inner">
-      <a href="#" class="logo">
-        <span class="logo-mark">F</span>
+      <a href="#top" class="brand">
+        <img src="assets/logo.svg" alt="" width="32" height="32" />
         <span>FYER</span>
       </a>
       <nav class="nav-links" id="navLinks">
-        <a href="#fitur">Fitur</a>
-        <a href="#cara-kerja">Cara Kerja</a>
-        <a href="#token">Token</a>
-        <a href="#roadmap">Roadmap</a>
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#fees">Fees</a>
         <a href="#faq">FAQ</a>
+        <a href="#docs">Docs</a>
       </nav>
-      <div class="nav-cta">
-        <a href="#" class="btn btn-ghost">Docs</a>
-        <a href="#mulai" class="btn btn-primary">Launch App</a>
+      <div class="nav-actions">
+        <button class="btn btn-ghost connect-btn" data-connect>Connect wallet</button>
+        <a href="#app" class="btn btn-primary">Launch App</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+          <span></span><span></span>
+        </button>
       </div>
-      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-inner">
-      <div class="pill reveal"><span class="dot"></span> Mainnet v1 kini live</div>
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="pill reveal">
+        <span class="dot"></span> Mainnet v1 is live on Robinhood Chain
+      </div>
       <h1 class="reveal">
-        Bergerak bebas.<br />
-        <span class="grad">Tetap tak terlihat.</span>
+        Private money.<br />
+        <span class="grad">Same Robinhood Chain.</span>
       </h1>
       <p class="lead reveal">
-        FYER adalah lapisan privasi untuk aset digital Anda. Kirim, tukar, dan simpan
-        tanpa jejak — terenkripsi end-to-end dengan zero-knowledge proof.
+        FYER is a zero-knowledge privacy layer for Robinhood Chain. Shield your
+        assets once, then send, trade and withdraw — without the chain linking
+        any of it back to you.
       </p>
-      <div class="hero-actions reveal">
-        <a href="#mulai" class="btn btn-primary btn-lg">Mulai Sekarang →</a>
-        <a href="#cara-kerja" class="btn btn-ghost btn-lg">Pelajari Lebih Lanjut</a>
+      <div class="hero-cta reveal">
+        <a href="#app" class="btn btn-primary btn-lg">Launch App →</a>
+        <a href="#how" class="btn btn-ghost btn-lg">How it works</a>
       </div>
 
-      <div class="terminal reveal">
-        <div class="term-bar"><i></i><i></i><i></i><span>fyer-cli</span></div>
-        <pre id="typer"></pre>
+      <div class="hero-card reveal">
+        <div class="hc-head">
+          <span class="hc-title">Shielded balance</span>
+          <span class="hc-tag">zk-proof ✓</span>
+        </div>
+        <div class="hc-balance"><span class="blur" id="heroBal">●●●●●●</span> <small>ETH</small></div>
+        <div class="hc-rows">
+          <div class="hc-row"><span>Sender</span><code>0x••••••••</code></div>
+          <div class="hc-row"><span>Receiver</span><code>0x••••••••</code></div>
+          <div class="hc-row"><span>Amount</span><code>hidden</code></div>
+          <div class="hc-row"><span>Network</span><code>Robinhood Chain</code></div>
+        </div>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat"><b>0%</b><span>Private transfer fee</span></div>
+        <div class="stat"><b>100%</b><span>Non-custodial</span></div>
+        <div class="stat"><b>&lt;1s</b><span>L2 block time</span></div>
+        <div class="stat"><b>EVM</b><span>Any wallet works</span></div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>SHIELD</span><i>✦</i><span>SEND</span><i>✦</i><span>TRADE</span><i>✦</i><span>WITHDRAW</span><i>✦</i>
+        <span>ZERO KNOWLEDGE</span><i>✦</i><span>ROBINHOOD CHAIN</span><i>✦</i><span>NON-CUSTODIAL</span><i>✦</i>
+        <span>SHIELD</span><i>✦</i><span>SEND</span><i>✦</i><span>TRADE</span><i>✦</i><span>WITHDRAW</span><i>✦</i>
+        <span>ZERO KNOWLEDGE</span><i>✦</i><span>ROBINHOOD CHAIN</span><i>✦</i><span>NON-CUSTODIAL</span><i>✦</i>
       </div>
     </div>
-  </section>
 
-  <!-- STATS -->
-  <section class="stats">
-    <div class="container stats-grid">
-      <div class="stat reveal"><b data-count="128" data-prefix="$" data-suffix="M+">0</b><span>Volume Terlindungi</span></div>
-      <div class="stat reveal"><b data-count="42" data-suffix="K+">0</b><span>Pengguna Aktif</span></div>
-      <div class="stat reveal"><b data-count="99.9" data-suffix="%" data-dec="1">0</b><span>Uptime Jaringan</span></div>
-      <div class="stat reveal"><b data-count="0" data-suffix=" log">0</b><span>Data Disimpan</span></div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section id="fitur" class="section">
-    <div class="container">
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section container">
       <div class="section-head reveal">
-        <span class="eyebrow">// fitur</span>
-        <h2>Privasi yang dirancang dari nol</h2>
-        <p>Setiap komponen FYER dibangun dengan satu prinsip: data Anda hanya milik Anda.</p>
-      </div>
-      <div class="features">
-        <article class="card reveal">
-          <div class="icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-          </div>
-          <h3>Transaksi Rahasia</h3>
-          <p>Jumlah, pengirim, dan penerima disamarkan menggunakan zk-SNARK. Tidak ada yang bisa melacak alur dana Anda.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon">
-            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg>
-          </div>
-          <h3>Stealth Address</h3>
-          <p>Alamat sekali pakai dibuat otomatis untuk setiap pembayaran sehingga riwayat dompet Anda tetap bersih.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon">
-            <svg viewBox="0 0 24 24"><path d="M7 7h10v10H7z"/><path d="M3 12h4M17 12h4M12 3v4M12 17v4"/></svg>
-          </div>
-          <h3>Cross-Chain Bridge</h3>
-          <p>Pindahkan aset antar jaringan — Ethereum, Solana, Base, dan lainnya — tanpa membuka identitas.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon">
-            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>
-          </div>
-          <h3>Pesan Terenkripsi</h3>
-          <p>Chat wallet-to-wallet dengan enkripsi end-to-end. Tanpa nomor telepon, tanpa email, tanpa server pusat.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          </div>
-          <h3>Finalitas Instan</h3>
-          <p>Proof dihasilkan di perangkat Anda dalam hitungan detik. Cepat, ringan, dan hemat biaya gas.</p>
-        </article>
-        <article class="card reveal">
-          <div class="icon">
-            <svg viewBox="0 0 24 24"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg>
-          </div>
-          <h3>Open Source</h3>
-          <p>Seluruh kode dapat diaudit publik dan telah melewati audit keamanan independen oleh pihak ketiga.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="cara-kerja" class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">// cara kerja</span>
-        <h2>Tiga langkah menuju anonim</h2>
+        <span class="eyebrow">How it works</span>
+        <h2>Three steps. Zero traces.</h2>
+        <p>Everything happens on Robinhood Chain. No bridges to a separate privacy chain, no new wallet to learn.</p>
       </div>
       <div class="steps">
-        <div class="step reveal">
-          <span class="num">01</span>
-          <h3>Hubungkan Dompet</h3>
-          <p>Sambungkan dompet favorit Anda. FYER tidak pernah menyimpan private key.</p>
-        </div>
-        <div class="step reveal">
-          <span class="num">02</span>
-          <h3>Shield Aset</h3>
-          <p>Masukkan aset ke dalam shielded pool. Saldo Anda kini tersembunyi dari publik.</p>
-        </div>
-        <div class="step reveal">
-          <span class="num">03</span>
-          <h3>Bertransaksi Bebas</h3>
-          <p>Kirim, swap, atau tarik kapan saja. Setiap langkah dilindungi zero-knowledge.</p>
-        </div>
+        <article class="step reveal">
+          <span class="step-n">01</span>
+          <h3>Shield</h3>
+          <p>Deposit ETH or any supported token into the FYER pool. You receive a private note that only your key can spend.</p>
+        </article>
+        <article class="step reveal">
+          <span class="step-n">02</span>
+          <h3>Send &amp; trade</h3>
+          <p>Move value inside the shielded pool. A zk-proof shows the transaction is valid without revealing who, what or how much.</p>
+        </article>
+        <article class="step reveal">
+          <span class="step-n">03</span>
+          <h3>Withdraw</h3>
+          <p>Unshield to any fresh address whenever you want. On-chain, there is no link between the deposit and the withdrawal.</p>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- TOKEN -->
-  <section id="token" class="section">
-    <div class="container token">
-      <div class="token-text reveal">
-        <span class="eyebrow">// tokenomics</span>
-        <h2>$FYER menggerakkan ekosistem</h2>
-        <p>Token $FYER digunakan untuk biaya relayer, staking node, dan tata kelola protokol. Total suplai tetap 1.000.000.000 token.</p>
-        <ul class="legend">
-          <li><i style="--c:#39ff88"></i>Komunitas & Likuiditas <b>45%</b></li>
-          <li><i style="--c:#1fd170"></i>Staking Rewards <b>20%</b></li>
-          <li><i style="--c:#12a356"></i>Treasury <b>15%</b></li>
-          <li><i style="--c:#0b7a40"></i>Tim (vesting 2 thn) <b>12%</b></li>
-          <li><i style="--c:#c6ffdd"></i>Marketing <b>8%</b></li>
-        </ul>
-        <div class="ca">
-          <span>CA:</span>
-          <code id="ca">0xF7E8...A1B2C3D4E5F6FYER</code>
-          <button id="copyCa" class="btn btn-ghost btn-sm">Salin</button>
-        </div>
-      </div>
-      <div class="donut-wrap reveal">
-        <svg class="donut" viewBox="0 0 42 42">
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="#39ff88" stroke-width="5" stroke-dasharray="45 55" stroke-dashoffset="25"/>
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="#1fd170" stroke-width="5" stroke-dasharray="20 80" stroke-dashoffset="80"/>
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="#12a356" stroke-width="5" stroke-dasharray="15 85" stroke-dashoffset="60"/>
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="#0b7a40" stroke-width="5" stroke-dasharray="12 88" stroke-dashoffset="45"/>
-          <circle cx="21" cy="21" r="15.915" fill="none" stroke="#c6ffdd" stroke-width="5" stroke-dasharray="8 92" stroke-dashoffset="33"/>
-        </svg>
-        <div class="donut-center"><b>1B</b><span>Total Suplai</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROADMAP -->
-  <section id="roadmap" class="section">
-    <div class="container">
+    <!-- FEATURES -->
+    <section id="features" class="section container">
       <div class="section-head reveal">
-        <span class="eyebrow">// roadmap</span>
-        <h2>Perjalanan kami</h2>
+        <span class="eyebrow">Features</span>
+        <h2>Privacy that feels like Robinhood.</h2>
       </div>
-      <div class="timeline">
-        <div class="tl-item done reveal"><span class="tl-q">Q1 2026</span><h3>Genesis</h3><p>Whitepaper, testnet publik, dan audit keamanan pertama.</p></div>
-        <div class="tl-item done reveal"><span class="tl-q">Q2 2026</span><h3>Mainnet v1</h3><p>Peluncuran shielded pool di Ethereum & token $FYER.</p></div>
-        <div class="tl-item active reveal"><span class="tl-q">Q4 2026</span><h3>Multi-Chain</h3><p>Ekspansi ke Solana, Base, dan Arbitrum dengan bridge privat.</p></div>
-        <div class="tl-item reveal"><span class="tl-q">2027</span><h3>FYER Messenger</h3><p>Aplikasi mobile untuk chat & pembayaran terenkripsi.</p></div>
+      <div class="grid">
+        <article class="card reveal">
+          <div class="ic">◎</div>
+          <h3>Zero-knowledge proofs</h3>
+          <p>Every private action is backed by a succinct proof verified on-chain. Math, not trust.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic">⛨</div>
+          <h3>Non-custodial</h3>
+          <p>FYER can’t see, freeze or move your funds. Your keys, your notes, your money.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic">⚡</div>
+          <h3>Built for Robinhood Chain</h3>
+          <p>An Arbitrum Orbit L2 means low fees and fast confirmations for every shielded action.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic">⇄</div>
+          <h3>Any EVM wallet</h3>
+          <p>MetaMask, Rabby, Robinhood Wallet — connect what you already use. We add the network for you.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic">◈</div>
+          <h3>Tokenized stocks, too</h3>
+          <p>Shield the assets that live on Robinhood Chain, not just ETH. Your portfolio is your business.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic">✓</div>
+          <h3>Viewing keys</h3>
+          <p>Need to prove your history to an accountant? Share a read-only viewing key — on your terms.</p>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ -->
-  <section id="faq" class="section">
-    <div class="container narrow">
+    <!-- APP -->
+    <section id="app" class="section container">
       <div class="section-head reveal">
-        <span class="eyebrow">// faq</span>
-        <h2>Pertanyaan umum</h2>
+        <span class="eyebrow">App</span>
+        <h2>Connect to Robinhood Chain.</h2>
+        <p>Connect your wallet and FYER will add and switch to Robinhood Chain automatically.</p>
+      </div>
+      <div class="app reveal">
+        <div class="app-tabs" role="tablist">
+          <button class="tab active" data-tab="shield">Shield</button>
+          <button class="tab" data-tab="send">Send</button>
+          <button class="tab" data-tab="withdraw">Withdraw</button>
+        </div>
+
+        <div class="app-status">
+          <div><span>Wallet</span><code id="appAddr">Not connected</code></div>
+          <div><span>Network</span><code id="appNet">—</code></div>
+          <div><span>Public balance</span><code id="appBal">—</code></div>
+        </div>
+
+        <form class="app-form" id="appForm">
+          <label class="field" id="fieldTo" hidden>
+            <span>Recipient (FYER address or 0x…)</span>
+            <input type="text" id="inTo" placeholder="0x…" autocomplete="off" />
+          </label>
+          <label class="field">
+            <span>Amount</span>
+            <div class="amount">
+              <input type="number" id="inAmt" placeholder="0.0" min="0" step="any" />
+              <span class="token">ETH</span>
+            </div>
+          </label>
+          <div class="fee-line"><span>Fee</span><b id="feeVal">0.3%</b></div>
+          <div class="fee-line"><span>You receive</span><b id="recvVal">0 ETH</b></div>
+          <button type="submit" class="btn btn-primary btn-block" id="appSubmit">Connect wallet</button>
+          <p class="app-note" id="appNote"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- FEES -->
+    <section id="fees" class="section container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Fees</span>
+        <h2>Simple, flat, transparent.</h2>
+      </div>
+      <div class="fees">
+        <div class="fee reveal"><b>0.3%</b><span>Shield</span><p>Paid once when assets enter the private pool.</p></div>
+        <div class="fee fee-hi reveal"><b>0%</b><span>Private transfer</span><p>Send to anyone inside FYER for free. Only L2 gas.</p></div>
+        <div class="fee reveal"><b>0.3%</b><span>Withdraw</span><p>Paid when assets leave the pool to a public address.</p></div>
+      </div>
+    </section>
+
+    <!-- NETWORK -->
+    <section id="docs" class="section container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Network</span>
+        <h2>Robinhood Chain details.</h2>
+        <p>Add the network manually if your wallet doesn’t prompt you.</p>
+      </div>
+      <div class="netbox reveal">
+        <dl class="net" id="netDetails"></dl>
+        <button class="btn btn-ghost" id="addNetBtn">Add to wallet</button>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section container">
+      <div class="section-head reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions, answered.</h2>
       </div>
       <div class="faq">
-        <details class="reveal" open>
-          <summary>Apa itu FYER?</summary>
-          <p>FYER adalah protokol privasi yang memungkinkan Anda bertransaksi aset kripto tanpa mengungkap identitas, saldo, atau riwayat transaksi.</p>
+        <details class="reveal">
+          <summary>What is FYER?</summary>
+          <p>FYER is a privacy layer for Robinhood Chain. It lets you shield assets into a zero-knowledge pool and then transact privately on the same chain.</p>
         </details>
         <details class="reveal">
-          <summary>Apakah FYER aman digunakan?</summary>
-          <p>Ya. Kontrak pintar FYER bersifat open source dan telah diaudit oleh firma keamanan independen. Anda selalu memegang kendali penuh atas aset Anda.</p>
+          <summary>Is FYER custodial?</summary>
+          <p>No. Funds sit in an on-chain contract and can only be spent with proofs generated from your own keys. Nobody — including the FYER team — can move them.</p>
         </details>
         <details class="reveal">
-          <summary>Jaringan apa saja yang didukung?</summary>
-          <p>Saat ini Ethereum mainnet. Solana, Base, dan Arbitrum akan menyusul sesuai roadmap.</p>
+          <summary>Which wallets are supported?</summary>
+          <p>Any EVM wallet that injects <code>window.ethereum</code>: MetaMask, Rabby, Coinbase Wallet, Robinhood Wallet and more.</p>
         </details>
         <details class="reveal">
-          <summary>Berapa biaya penggunaannya?</summary>
-          <p>Biaya protokol hanya 0.1% per transaksi ditambah biaya gas jaringan. Pemegang $FYER yang melakukan staking mendapat potongan biaya.</p>
+          <summary>What does it cost?</summary>
+          <p>0.3% to shield, 0% for private transfers, 0.3% to withdraw — plus normal Robinhood Chain gas.</p>
+        </details>
+        <details class="reveal">
+          <summary>How do I get ETH on Robinhood Chain?</summary>
+          <p>Bridge ETH from Ethereum or another supported network using the official Robinhood Chain bridge, then shield it with FYER.</p>
         </details>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA -->
-  <section id="mulai" class="section">
-    <div class="container">
-      <div class="cta reveal">
-        <h2>Siap menghilang dari radar?</h2>
-        <p>Bergabunglah dengan ribuan pengguna yang telah memilih privasi.</p>
-        <form class="cta-form" id="ctaForm">
-          <input type="email" placeholder="email@anda.com" required />
-          <button class="btn btn-primary" type="submit">Gabung Waitlist</button>
-        </form>
-        <small id="ctaMsg"></small>
-      </div>
-    </div>
-  </section>
+    <!-- CTA -->
+    <section class="cta container reveal">
+      <h2>Go private on Robinhood Chain.</h2>
+      <p>Shield once. Move freely.</p>
+      <a href="#app" class="btn btn-primary btn-lg">Launch App →</a>
+    </section>
+  </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-inner">
-      <div>
-        <a href="#" class="logo"><span class="logo-mark">F</span><span>FYER</span></a>
-        <p class="muted">Privasi adalah hak, bukan fitur.</p>
-      </div>
+      <a href="#top" class="brand">
+        <img src="assets/logo.svg" alt="" width="28" height="28" />
+        <span>FYER</span>
+      </a>
+      <p>Private money on Robinhood Chain. FYER is an independent project and is not affiliated with Robinhood Markets, Inc.</p>
       <div class="footer-links">
-        <div><h4>Produk</h4><a href="#fitur">Fitur</a><a href="#token">Token</a><a href="#roadmap">Roadmap</a></div>
-        <div><h4>Sumber</h4><a href="#">Docs</a><a href="#">Whitepaper</a><a href="#">Audit</a></div>
-        <div><h4>Komunitas</h4><a href="#">X / Twitter</a><a href="#">Telegram</a><a href="#">GitHub</a></div>
+        <a href="#docs">Docs</a>
+        <a href="#faq">FAQ</a>
+        <a id="xLink" href="#" target="_blank" rel="noopener">X / Twitter</a>
       </div>
     </div>
-    <div class="container copy">© <span id="year"></span> FYER Protocol. Semua hak dilindungi.</div>
   </footer>
 
-  <script src="script.js"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
