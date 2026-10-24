@@ -119,6 +119,12 @@ body.has-cursor .cursor-glow { opacity: 1; }
 .btn-lg { padding: 16px 30px; font-size: 1rem; }
 .btn-block { width: 100%; padding: 15px; }
 .btn[disabled] { opacity: .5; cursor: not-allowed; }
+.btn-icon { width: 42px; height: 42px; padding: 0; }
+.x-ic { width: 16px; height: 16px; flex: none; }
+.btn-icon .x-ic { width: 15px; height: 15px; }
+.cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.x-foot { display: inline-flex; align-items: center; gap: 7px; }
+.x-foot .x-ic { width: 13px; height: 13px; }
 .arr { display: inline-block; transition: transform .4s var(--ease); }
 .btn:hover .arr { transform: translateX(5px); }
 
