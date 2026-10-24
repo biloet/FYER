@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000}
+.art{position:relative;overflow:hidden;background:#020604;font-family:Inter,sans-serif;color:#ecfdec}
+canvas{position:absolute;inset:0}
+.glow{position:absolute;border-radius:50%;filter:blur(60px)}
+.grad{background:linear-gradient(90deg,#d4ff6a,#7cff6b 45%,#00c805);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* avatar */
+#avatar{width:1000px;height:1000px;display:grid;place-items:center}
+#avatar .glow{width:760px;height:760px;left:120px;top:150px;background:radial-gradient(circle,rgba(0,200,5,.55),transparent 65%)}
+.mark{position:relative;width:520px;height:520px}
+/* banner */
+#banner{width:1500px;height:500px}
+#banner .glow.a{width:900px;height:700px;right:-150px;top:-200px;background:radial-gradient(circle,rgba(0,200,5,.45),transparent 65%)}
+#banner .glow.b{width:600px;height:500px;left:-200px;top:-260px;background:radial-gradient(circle,rgba(31,122,58,.5),transparent 65%)}
+.copy{position:absolute;left:110px;top:100px}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:17px;letter-spacing:.28em;color:#7cff6b;display:flex;align-items:center;gap:14px}
+.kicker b{width:36px;height:2px;background:#7cff6b;box-shadow:0 0 10px #7cff6b}
+h1{font-weight:900;font-size:86px;line-height:.98;letter-spacing:-.045em;margin-top:22px}
+.tag{margin-top:26px;font-size:22px;color:#9cc4a6;font-weight:500}
+.chip{position:absolute;right:70px;bottom:52px;font-family:"JetBrains Mono",monospace;font-size:16px;color:#7cff6b;padding:9px 16px;border:1px solid rgba(124,255,107,.4);border-radius:99px;background:rgba(124,255,107,.08);display:flex;gap:10px;align-items:center}
+.chip i{width:8px;height:8px;border-radius:50%;background:#7cff6b;box-shadow:0 0 10px #7cff6b}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(2,6,4,.85) 100%)}
+</style></head><body>
+
+<div id="avatar" class="art">
+  <div class="glow"></div>
+  <canvas id="cvA" width="1000" height="1000"></canvas>
+  <svg class="mark" viewBox="0 0 520 520">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4ff6a"/><stop offset=".5" stop-color="#7cff6b"/><stop offset="1" stop-color="#00c805"/></linearGradient>
+      <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+    </defs>
+    <!-- glow copy -->
+    <path d="M150 430V90h230v74H236v58h126v74H236v134z" fill="#00c805" opacity=".7" filter="url(#blur)"/>
+    <path d="M150 430V90h230v74H236v58h126v74H236v134z" fill="url(#g)"/>
+    <!-- shield cut: privacy slit -->
+    <rect x="150" y="296" width="86" height="10" fill="#020604" opacity=".9"/>
+  </svg>
+  <div class="vig"></div>
+</div>
+
+<div id="banner" class="art">
+  <div class="glow a"></div><div class="glow b"></div>
+  <canvas id="cvB" width="1500" height="500"></canvas>
+  <div class="copy">
+    <div class="kicker"><b></b>ZERO-KNOWLEDGE PRIVACY LAYER</div>
+    <h1>Private money.<br><span class="grad">Same Robinhood Chain.</span></h1>
+  </div>
+  <div class="chip"><i></i>Shield once. Move freely.</div>
+</div>
+
+<script>
+function rng(seed){return()=>((seed=Math.imul(seed^seed>>>15,seed|1)+0x6d2b79f5|0)>>>0)/4294967296*0+((seed=(seed*1664525+1013904223)>>>0)/4294967296)}
+function sphere(ctx,cx,cy,R,N,ry,rx,flashes,seed){
+  const r=rng(seed), g=Math.PI*(3-Math.sqrt(5));
+  const cY=Math.cos(ry),sY=Math.sin(ry),cX=Math.cos(rx),sX=Math.sin(rx);
+  for(let i=0;i<N;i++){
+    const y=1-(i/(N-1))*2, rr=Math.sqrt(1-y*y), x=Math.cos(g*i)*rr, z=Math.sin(g*i)*rr;
+    const x1=x*cY-z*sY, z1=x*sY+z*cY, y1=y*cX-z1*sX, z2=y*sX+z1*cX;
+    const d=(z2+1)/2, p=1+z2*.25, sx=cx+x1*R*p, sy=cy+y1*R*p, s=(.8+d*2)*R/300;
+    if(r()<flashes&&d>.5){ctx.fillStyle=`rgba(170,255,140,${.45*d})`;ctx.beginPath();ctx.arc(sx,sy,s*1.8,0,7);ctx.fill();}
+    ctx.fillStyle=`rgba(${90+d*60|0},255,${100+d*30|0},${.1+d*.75})`;ctx.fillRect(sx,sy,s,s);
+  }
+  ctx.strokeStyle='rgba(124,255,107,.18)';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(cx,cy,R*1.4,R*.33,-.25,0,7);ctx.stroke();
+}
+function dust(ctx,w,h,n,seed){const r=rng(seed);for(let i=0;i<n;i++){const s=r()*1.8+.4;ctx.fillStyle=`rgba(150,255,140,${.3*s})`;ctx.fillRect(r()*w,r()*h,s,s);}}
+const a=document.getElementById('cvA').getContext('2d');
+dust(a,1000,1000,160,7); sphere(a,500,500,420,1400,.6,-.35,0,3);
+const b=document.getElementById('cvB').getContext('2d');
+dust(b,1500,500,220,11); sphere(b,1180,250,230,1100,.4,-.35,.015,5);
+</script></body></html>
