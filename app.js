@@ -128,6 +128,56 @@
     }
   });
 
+  // ---------- $FYR token ----------
+  const tk = cfg.token;
+  $$("[data-ca]").forEach((el) => (el.textContent = tk.address));
+  $$("[data-ca-short]").forEach((el) => (el.textContent = short(tk.address)));
+  $("#tokenExplorer").href = `${target().blockExplorerUrls[0]}/token/${tk.address}`;
+
+  async function copyText(str) {
+    try {
+      await navigator.clipboard.writeText(str);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = str; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
+    }
+  }
+  $$("[data-copy-ca]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      await copyText(tk.address);
+      const label = b.querySelector("[data-copy-label]");
+      const prev = label.textContent;
+      label.textContent = "Copied ✓";
+      b.classList.add("copied");
+      setTimeout(() => { label.textContent = prev; b.classList.remove("copied"); }, 1600);
+      toast("$FYR contract address copied");
+    })
+  );
+
+  $("#addTokenBtn").addEventListener("click", async () => {
+    if (!eth()) return toast("No EVM wallet found.");
+    try {
+      if (!state.account) {
+        const [acc] = await eth().request({ method: "eth_requestAccounts" });
+        state.account = acc;
+      }
+      await switchChain();
+      // Read decimals from the contract instead of assuming them.
+      const raw = await eth().request({ method: "eth_call", params: [{ to: tk.address, data: "0x313ce567" }, "latest"] });
+      const decimals = parseInt(raw, 16);
+      if (!Number.isFinite(decimals)) throw new Error("Could not read $FYR decimals from Robinhood Chain");
+      await eth().request({
+        method: "wallet_watchAsset",
+        params: { type: "ERC20", options: { address: tk.address, symbol: tk.symbol, decimals, image: new URL(tk.image, location.href).href } },
+      });
+      await refresh();
+      toast("$FYR added to your wallet");
+    } catch (err) {
+      toast(err?.message || "Request rejected");
+    }
+  });
+
   if (eth()) {
     eth().on?.("accountsChanged", (a) => { state.account = a[0] || null; refresh(); });
     eth().on?.("chainChanged", () => { refresh(); });
