@@ -1,0 +1,128 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="helpers.js"></script>
+<script>
+const CA = "0xaf30…8ffb";
+const BX = 360, BW = 1200, BY = 640, BH = 44;
+const remain = (t) => 1 - eio(prog(t, 3.4, 7.0));
+
+// deterministic flame particles
+seed = 77;
+const flames = Array.from({ length: 1400 }, (_, i) => ({
+  b: 3.2 + (i / 1400) * 4.0 + rnd() * .15, u: rnd(), v: 160 + rnd() * 260, life: .7 + rnd() * .9,
+  wob: rnd() * 6.28, s: 2 + rnd() * 5,
+}));
+const embers = Array.from({ length: 160 }, () => ({ x: rnd() * W, b: 6.8 + rnd() * 9, v: 40 + rnd() * 90, s: 1 + rnd() * 2.5, w: rnd() * 6.28 }));
+
+function bar(t, a) {
+  const f = remain(t);
+  ctx.save(); ctx.globalAlpha = a;
+  ctx.fillStyle = "rgba(10,28,16,.9)"; ctx.strokeStyle = "rgba(124,255,107,.35)"; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.roundRect(BX, BY, BW, BH, BH / 2); ctx.fill(); ctx.stroke();
+  if (f > .002) {
+    const g = ctx.createLinearGradient(BX, 0, BX + BW, 0);
+    g.addColorStop(0, G3); g.addColorStop(.6, G2); g.addColorStop(1, G1);
+    ctx.fillStyle = g; ctx.shadowColor = "rgba(124,255,107,.8)"; ctx.shadowBlur = 30;
+    ctx.beginPath(); ctx.roundRect(BX + 4, BY + 4, Math.max(BH - 8, (BW - 8) * f), BH - 8, (BH - 8) / 2); ctx.fill();
+  }
+  ctx.restore();
+  // labels
+  text("DEV WALLET", BX, BY - 46, { size: 26, weight: 500, font: "JetBrains Mono", color: G2, track: 8, align: "left", alpha: a });
+  text("$FYR", BX + BW, BY - 46, { size: 26, weight: 700, font: "JetBrains Mono", color: MUTED, track: 4, align: "right", alpha: a });
+  text(Math.round(f * 100) + "%", W / 2, BY - 200, { size: 220, weight: 900, gradient: f > .001, color: TXT, glow: 40, alpha: a });
+}
+
+function fire(t) {
+  ctx.save(); ctx.globalCompositeOperation = "lighter";
+  for (const p of flames) {
+    const age = t - p.b;
+    if (age < 0 || age > p.life) continue;
+    // emitted from the burning edge of the bar at birth time
+    const edge = BX + (BW - 8) * remain(p.b);
+    const x0 = lerp(edge - 120, edge + 10, p.u);
+    const k = age / p.life;
+    const x = x0 + Math.sin(p.wob + age * 7) * 14 * k;
+    const y = BY + BH / 2 - p.v * age - 40 * k * k;
+    const r = p.s * (1 - k * .7);
+    const col = k < .3 ? "220,255,170" : k < .65 ? "124,255,107" : "0,200,5";
+    ctx.fillStyle = `rgba(${col},${(1 - k) * .55})`;
+    ctx.beginPath(); ctx.arc(x, y, r * 2.2, 0, 6.283); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function emberField(t, a) {
+  ctx.save(); ctx.globalCompositeOperation = "lighter";
+  for (const e of embers) {
+    const age = t - e.b; if (age < 0) continue;
+    const y = H + 20 - e.v * age * 3, x = e.x + Math.sin(e.w + age * 2) * 20;
+    if (y < -20) continue;
+    ctx.fillStyle = `rgba(150,255,130,${.5 * a})`;
+    ctx.beginPath(); ctx.arc(x, y, e.s, 0, 6.283); ctx.fill();
+  }
+  ctx.restore();
+}
+
+window.draw = (t, frame = Math.round(t * 30)) => {
+  ctx.save();
+  const shake = t > 6.95 && t < 7.4 ? (1 - prog(t, 6.95, 7.4)) * 10 : 0;
+  const z = 1 + t * .004;
+  ctx.translate(W / 2 + Math.sin(frame * 2.1) * shake, H / 2 + Math.cos(frame * 1.7) * shake);
+  ctx.scale(z, z); ctx.translate(-W / 2, -H / 2);
+  background(t);
+
+  // 1. intro
+  const i1 = env(t, .3, 3.3, .6, .5);
+  if (i1 > 0) {
+    words("100% of the $FYR dev supply", W / 2, H / 2 - 60, t, .5, .12, { size: 84, weight: 800, out: 1 - prog(t, 2.8, 3.3) });
+    words("is about to disappear.", W / 2, H / 2 + 55, t, 1.3, .14, { size: 84, weight: 900, gradient: true, glow: 30, out: 1 - prog(t, 2.8, 3.3) });
+  }
+  // 2. burn
+  const b = env(t, 3.0, 7.3, .4, .3);
+  if (b > 0) {
+    bar(t, b);
+    fire(t);
+    const bl = env(t, 3.6, 6.9, .3, .3);
+    text("BURNING", W / 2, BY + 120, { size: 30, weight: 700, font: "JetBrains Mono", color: G2, track: 16, alpha: bl * (.55 + .45 * Math.sin(t * 9)) });
+  }
+  // 3. burned
+  if (t > 7.0) emberField(t, env(t, 7.0, 17, .5, .5));
+  const c = env(t, 7.2, 10.6, .3, .5);
+  if (c > 0) {
+    const k = eo(prog(t, 7.2, 8.0));
+    text("DEV SUPPLY", W / 2, H / 2 - 150, { size: 32, weight: 600, font: "JetBrains Mono", color: G2, track: 18, alpha: c });
+    text("BURNED.", W / 2, H / 2, { size: 250, weight: 900, gradient: true, glow: 60, alpha: c, blur: (1 - k) * 24, rise: (1 - k) * 60 });
+    text("100%  ·  gone forever", W / 2, H / 2 + 150, { size: 38, weight: 500, color: MUTED, alpha: c * eo(prog(t, 8.0, 8.8)) });
+  }
+  // 4. statement
+  const d = env(t, 10.6, 13.6, .5, .5);
+  if (d > 0) {
+    const out = 1 - prog(t, 13.1, 13.6);
+    words("No dev bag. No backdoor.", W / 2, H / 2 - 60, t, 10.7, .14, { size: 104, out });
+    words("Verifiable on-chain.", W / 2, H / 2 + 75, t, 11.5, .14, { size: 104, gradient: true, glow: 40, out });
+  }
+  // 5. end card
+  const e = env(t, 13.6, 17.5, .6, .1);
+  if (e > 0) {
+    drawSphere(t, { R: 470, alpha: e * .45, form: 1 });
+    const k = eo(prog(t, 13.6, 14.6));
+    text("$FYR", W / 2, H / 2 - 70, { size: 200, weight: 900, gradient: true, glow: 50, alpha: e * k, blur: (1 - k) * 16, rise: (1 - k) * 40 });
+    const m = eo(prog(t, 14.3, 15.2));
+    text("Dev supply: 0%.  Burned forever.", W / 2, H / 2 + 75, { size: 44, weight: 700, color: TXT, alpha: e * m, rise: (1 - m) * 20 });
+    const n = eo(prog(t, 14.9, 15.8));
+    text(`CA ${CA}   ·   @fyerdotsite`, W / 2, H / 2 + 165, { size: 28, weight: 500, font: "JetBrains Mono", color: MUTED, track: 2, alpha: e * n });
+  }
+  ctx.restore();
+  flash(t, 7.0, .5, .55);
+  post(t, frame);
+};
+window.ready = document.fonts.ready.then(() => Promise.all([
+  document.fonts.load('900 100px "Inter"'), document.fonts.load('800 100px "Inter"'),
+  document.fonts.load('700 100px "Inter"'), document.fonts.load('500 100px "Inter"'),
+  document.fonts.load('500 30px "JetBrains Mono"'), document.fonts.load('700 30px "JetBrains Mono"'),
+])).then(() => true);
+</script></body></html>
