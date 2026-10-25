@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+#post{position:relative;width:1600px;height:900px;overflow:hidden;background:#020604;font-family:Inter,sans-serif;color:#ecfdec}
+canvas{position:absolute;inset:0}
+.glow{position:absolute;border-radius:50%;filter:blur(80px)}
+.g1{width:900px;height:900px;left:-80px;top:20px;background:radial-gradient(circle,rgba(0,200,5,.5),transparent 62%)}
+.g2{width:700px;height:600px;right:-200px;top:-250px;background:radial-gradient(circle,rgba(31,122,58,.45),transparent 65%)}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(2,6,4,.9) 100%)}
+.brand{position:absolute;left:64px;top:56px;display:flex;align-items:center;gap:14px;font-weight:800;letter-spacing:.16em;font-size:26px}
+.brand svg{width:44px;height:44px}
+.top-r{position:absolute;right:64px;top:64px;font-family:"JetBrains Mono",monospace;font-size:18px;color:#87ad92;letter-spacing:.12em}
+/* coin */
+.coin{position:absolute;left:150px;top:200px;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#1c4a27 0%,#0a1d10 55%,#04100a 100%);
+  border:2px solid rgba(124,255,107,.55);
+  box-shadow:0 0 0 14px rgba(124,255,107,.06),0 0 0 15px rgba(124,255,107,.25),0 0 140px 10px rgba(0,200,5,.5),inset 0 0 60px rgba(124,255,107,.25),inset 0 -20px 60px rgba(0,0,0,.6);
+  display:grid;place-items:center}
+.coin::before{content:"";position:absolute;inset:28px;border-radius:50%;border:2px dashed rgba(124,255,107,.25)}
+.coin::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(130deg,rgba(255,255,255,.14),transparent 40%)}
+.coin svg{width:260px;height:260px;filter:drop-shadow(0 0 30px rgba(124,255,107,.7))}
+.orbit{position:absolute;left:400px;top:450px;width:820px;height:190px;margin:-95px 0 0 -410px;border-radius:50%;border:1.5px solid rgba(124,255,107,.25);transform:rotate(-14deg)}
+.orbit i{position:absolute;right:60px;top:22px;width:12px;height:12px;border-radius:50%;background:#7cff6b;box-shadow:0 0 20px 6px rgba(124,255,107,.7)}
+/* text */
+.copy{position:absolute;left:770px;top:210px;width:780px}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:20px;letter-spacing:.3em;color:#7cff6b;display:flex;align-items:center;gap:16px}
+.kicker b{width:40px;height:2px;background:#7cff6b;box-shadow:0 0 10px #7cff6b}
+h1{font-weight:900;font-size:220px;line-height:.9;letter-spacing:-.06em;margin:18px 0 8px}
+.grad{background:linear-gradient(90deg,#d4ff6a,#7cff6b 45%,#00c805);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 40px rgba(124,255,107,.35))}
+h2{font-weight:800;font-size:54px;letter-spacing:-.03em;line-height:1.1}
+h2 span{color:#87ad92;font-weight:700}
+.ca{margin-top:44px;display:inline-flex;flex-direction:column;gap:8px;padding:18px 24px;border-radius:18px;background:rgba(10,28,16,.8);border:1px solid rgba(124,255,107,.4);box-shadow:0 30px 80px -30px rgba(0,200,5,.6)}
+.ca span{font-family:"JetBrains Mono",monospace;font-size:16px;letter-spacing:.2em;color:#7cff6b;display:flex;align-items:center;gap:10px}
+.ca span i{width:8px;height:8px;border-radius:50%;background:#7cff6b;box-shadow:0 0 10px #7cff6b}
+.ca code{font-family:"JetBrains Mono",monospace;font-size:24px;color:#ecfdec}
+.foot{position:absolute;left:64px;bottom:52px;right:64px;display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:18px;color:#87ad92;letter-spacing:.08em}
+.foot b{color:#ecfdec;font-weight:600}
+</style></head><body>
+<div id="post">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <canvas id="cv" width="1600" height="900"></canvas>
+  <div class="vig"></div>
+  <div class="brand">
+    <svg viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4ff6a"/><stop offset="1" stop-color="#00c805"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="#06120A" stroke="rgba(124,255,107,.35)"/><path d="M20 46V18h26v7H28v6h15v7H28v8z" fill="url(#g)"/></svg>
+    FYER
+  </div>
+  <div class="top-r">OFFICIAL TOKEN</div>
+  <div class="orbit"><i></i></div>
+  <div class="coin">
+    <svg viewBox="0 0 64 64"><defs><linearGradient id="g2" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4ff6a"/><stop offset=".5" stop-color="#7cff6b"/><stop offset="1" stop-color="#00c805"/></linearGradient></defs><path d="M20 50V14h28v8H29v7h16v8H29v13z" fill="url(#g2)"/></svg>
+  </div>
+  <div class="copy">
+    <div class="kicker"><b></b>INTRODUCING</div>
+    <h1 class="grad">$FYR</h1>
+    <h2>The official FYER token.<br><span>Now on Robinhood Chain.</span></h2>
+    <div class="ca"><span><i></i>CONTRACT ADDRESS</span><code>0xaf307ad6e63c824b65dcc90421eb40c62a888ffb</code></div>
+  </div>
+  <div class="foot"><span>Shield once. <b>Move freely.</b></span><span>@fyerdotsite</span></div>
+</div>
+<script>
+let seed=13;const r=()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296);
+const c=document.getElementById('cv').getContext('2d');
+for(let i=0;i<280;i++){const s=r()*1.8+.4;c.fillStyle=`rgba(150,255,140,${.28*s})`;c.fillRect(r()*1600,r()*900,s,s);}
+const N=1600,g=Math.PI*(3-Math.sqrt(5)),R=420,cx=400,cy=450,ry=.7,rx=-.35;
+const cY=Math.cos(ry),sY=Math.sin(ry),cX=Math.cos(rx),sX=Math.sin(rx);
+for(let i=0;i<N;i++){const y=1-(i/(N-1))*2,rr=Math.sqrt(1-y*y),x=Math.cos(g*i)*rr,z=Math.sin(g*i)*rr;
+ const x1=x*cY-z*sY,z1=x*sY+z*cY,y1=y*cX-z1*sX,z2=y*sX+z1*cX,d=(z2+1)/2,p=1+z2*.25,s=1+d*1.8;
+ c.fillStyle=`rgba(${90+d*60|0},255,${100+d*30|0},${.05+d*.35})`;c.fillRect(cx+x1*R*p,cy+y1*R*p,s,s);}
+</script></body></html>
